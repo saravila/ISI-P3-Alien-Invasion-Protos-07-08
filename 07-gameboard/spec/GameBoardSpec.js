@@ -72,9 +72,15 @@ describe("Clase GameBoard", function(){
     });
 
     it("Method add", function(){
-      var miBoard = new GameBoard();
-      var miPlayerShip = new PlayerShip();
+      miBoard = new GameBoard();
+      miPlayerShip = new PlayerShip();
       expect(miBoard.add(miPlayerShip)).toBe(miPlayerShip);
+    });
+
+    it ("Method reset removed", function() { 
+      miBoard = new GameBoard(); 
+      miBoard.resetRemoved(); 
+      expect(miBoard.removed.length).toBe(0);
     });
 
 });  

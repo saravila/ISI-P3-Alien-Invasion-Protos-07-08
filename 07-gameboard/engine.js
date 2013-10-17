@@ -251,8 +251,8 @@ var GameBoard = function() {
     this.collide = function(obj,type) {
     	return this.detect(function() {
     	    if(obj != this) {
-    		var col = (!type || this.type & type) && board.overlap(obj,this)
-    		return col ? this : false;
+        		var col = (!type || this.type & type) && board.overlap(obj,this)
+        		return col ? this : false;
     	    }
     	});
     };
