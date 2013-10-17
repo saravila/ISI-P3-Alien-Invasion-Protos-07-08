@@ -257,5 +257,3 @@ var GameBoard = function() {
     	});
     };
 };
-
-

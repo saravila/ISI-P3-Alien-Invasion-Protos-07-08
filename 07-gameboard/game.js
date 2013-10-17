@@ -101,7 +101,7 @@ var PlayerShip = function() {
    this.step = function(dt) {
      if(Game.keys['left']) { this.vx = -this.maxVel; }
      else if(Game.keys['right']) { this.vx = this.maxVel; }
-     else { this.vx = 0; }
+     else { this.vx = 0; } 
 
      this.x += this.vx * dt;
 

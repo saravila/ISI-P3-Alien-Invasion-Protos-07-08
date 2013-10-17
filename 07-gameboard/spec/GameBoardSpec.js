@@ -71,11 +71,10 @@ describe("Clase GameBoard", function(){
       expect(ctx).toBeDefined();
     });
 
-    var miBoard = new GameBoard();
-    var dummy = 4;
-
     it("Method add", function(){
-      expect(miBoard.add(dummy)).toBe(dummy);
+      var miBoard = new GameBoard();
+      var miPlayerShip = new PlayerShip();
+      expect(miBoard.add(miPlayerShip)).toBe(miPlayerShip);
     });
 
-});
+});  
