@@ -56,3 +56,26 @@
     colisionado con objetos de cierto tipo, no con todos los objetos.
 
 */
+
+describe("Clase GameBoard", function(){
+
+    var canvas, ctx;
+
+    beforeEach(function(){
+      loadFixtures('index.html');
+
+      canvas = $('#game')[0];
+      expect(canvas).toExist();
+
+      ctx = canvas.getContext('2d');
+      expect(ctx).toBeDefined();
+    });
+
+    var miBoard = new GameBoard();
+    var dummy = 4;
+
+    it("Method add", function(){
+      expect(miBoard.add(dummy)).toBe(dummy);
+    });
+
+});
