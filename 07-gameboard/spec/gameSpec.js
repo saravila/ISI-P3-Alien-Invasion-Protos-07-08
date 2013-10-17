@@ -105,7 +105,7 @@ describe("Game singleton", function(){
 	waits(300)
 
 	runs(function(){
-	    expect(Game.loop.calls.length).toBeGreaterThan(10);
+	    expect(Game.loop.calls.length).toBeGreaterThan(8);
 	});
     });
 

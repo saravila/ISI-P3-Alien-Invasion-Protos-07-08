@@ -83,4 +83,11 @@ describe("Clase GameBoard", function(){
       expect(miBoard.removed.length).toBe(0);
     });
 
+    it ("Method remove", function() { 
+      miBoard = new GameBoard(); 
+      miBoard.resetRemoved();
+      miBoard.remove(); 
+      expect(miBoard.removed.length).toBe(1);
+    });
+
 });  

@@ -120,8 +120,6 @@ var SpriteSheet = new function() {
     };
 }
 
-
-
 // La clase TitleScreen ofrece la interfaz step(), draw() para que
 // pueda ser mostrada desde el bucle principal del juego
 
@@ -198,7 +196,6 @@ var GameBoard = function() {
     	    if(idx != -1) this.objects.splice(idx,1); 
     	}
     }
-
 
     // Iterador que aplica el método funcName a todos los
     // objetos de objects
