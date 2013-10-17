@@ -74,7 +74,7 @@ describe("Clase GameBoard", function(){
     it("Method add", function(){
       miBoard = new GameBoard();
       miPlayerShip = new PlayerShip();
-      expect(miBoard.add(miPlayerShip)).toBe(miPlayerShip);
+      expect(miBoard.add(miPlayerShip)).toBe(miPlayerShip); 
     });
 
     it ("Method reset removed", function() { 
@@ -85,9 +85,19 @@ describe("Clase GameBoard", function(){
 
     it ("Method remove", function() { 
       miBoard = new GameBoard(); 
+      miPlayerShip = new PlayerShip();
       miBoard.resetRemoved();
-      miBoard.remove(); 
+      miBoard.remove(miPlayerShip); 
       expect(miBoard.removed.length).toBe(1);
+    });
+
+     it ("Method finalizeRemoved", function() { 
+      miBoard = new GameBoard(); 
+      miPlayerShip = new PlayerShip();
+      miBoard.resetRemoved();
+      miBoard.remove(miPlayerShip);
+      miBoard.finalizeRemoved();
+      expect(miBoard.objects.length).toBe(0);
     });
 
 });  
