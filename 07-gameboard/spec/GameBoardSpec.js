@@ -74,7 +74,8 @@ describe("Clase GameBoard", function(){
     it("Method add", function(){
       miBoard = new GameBoard();
       miPlayerShip = new PlayerShip();
-      expect(miBoard.add(miPlayerShip)).toBe(miPlayerShip); 
+      expect(miBoard.add(miPlayerShip)).toBe(miPlayerShip);
+      expect(miBoard.objects.length).toBe(1); 
     });
 
     it ("Method reset removed", function() { 
@@ -99,5 +100,14 @@ describe("Clase GameBoard", function(){
       miBoard.finalizeRemoved();
       expect(miBoard.objects.length).toBe(0);
     });
+
+    it ("Method iterate", function() { 
+      miBoard = new GameBoard(); 
+      miPlayerShip = new PlayerShip();
+      miBoard.add(miPlayerShip);
+      spyOn(miPlayerShip, "step");
+      miBoard.iterate("step",1.0);
+      expect(miPlayerShip.step).toHaveBeenCalled();
+    });  
 
 });  
