@@ -138,4 +138,17 @@ describe("Clase GameBoard", function(){
       expect(miBoard.overlap(miMisil,miPlayerShip)).toBeTruthy;
     });  
 
+    it ("Method step", function() { 
+      miBoard = new GameBoard(); 
+      miPlayerShip = new PlayerShip();
+
+      spyOn(miBoard, "resetRemoved"); 
+      spyOn(miBoard, "iterate");
+      spyOn(miBoard, "finalizeRemoved");
+      miBoard.step(1.0);
+      expect(miBoard.resetRemoved).toHaveBeenCalled();
+      expect(miBoard.iterate).toHaveBeenCalled();
+      expect(miBoard.finalizeRemoved).toHaveBeenCalled();
+    });  
+
 });  
