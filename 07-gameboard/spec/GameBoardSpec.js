@@ -139,8 +139,7 @@ describe("Clase GameBoard", function(){
     });  
 
     it ("Method step", function() { 
-      miBoard = new GameBoard(); 
-      miPlayerShip = new PlayerShip();
+      miBoard = new GameBoard();  
 
       spyOn(miBoard, "resetRemoved"); 
       spyOn(miBoard, "iterate");
@@ -149,6 +148,15 @@ describe("Clase GameBoard", function(){
       expect(miBoard.resetRemoved).toHaveBeenCalled();
       expect(miBoard.iterate).toHaveBeenCalled();
       expect(miBoard.finalizeRemoved).toHaveBeenCalled();
+    });  
+
+    it ("Method draw", function() { 
+      miBoard = new GameBoard();  
+      ctx = canvas.getContext('2d');
+
+      spyOn(miBoard, "iterate"); 
+      miBoard.draw(ctx);
+      expect(miBoard.iterate).toHaveBeenCalled();
     });  
 
 });  
