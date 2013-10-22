@@ -69,46 +69,36 @@ describe("Clase GameBoard", function(){
 
       ctx = canvas.getContext('2d');
       expect(ctx).toBeDefined();
+
+      miBoard = new GameBoard();
+      miPlayerShip = new PlayerShip();
     });
 
     it("Method add", function(){
-      miBoard = new GameBoard();
-      miPlayerShip = new PlayerShip();
 
       expect(miBoard.add(miPlayerShip)).toBe(miPlayerShip);
       expect(miBoard.objects.length).toBe(1); 
     });
 
-    it ("Method reset removed", function() { 
-      miBoard = new GameBoard(); 
-
+    it ("Method reset removed", function() {  
       miBoard.resetRemoved(); 
       expect(miBoard.removed.length).toBe(0);
     });
 
-    it ("Method remove", function() { 
-      miBoard = new GameBoard(); 
-      miPlayerShip = new PlayerShip();
-
+    it ("Method remove", function() {  
       miBoard.resetRemoved();
       miBoard.remove(miPlayerShip); 
       expect(miBoard.removed.length).toBe(1);
     });
 
-     it ("Method finalizeRemoved", function() { 
-      miBoard = new GameBoard(); 
-      miPlayerShip = new PlayerShip();
-
+     it ("Method finalizeRemoved", function() {  
       miBoard.resetRemoved();
       miBoard.remove(miPlayerShip);
       miBoard.finalizeRemoved();
       expect(miBoard.objects.length).toBe(0);
     });
 
-    it ("Method iterate", function() { 
-      miBoard = new GameBoard(); 
-      miPlayerShip = new PlayerShip();
-
+    it ("Method iterate", function() {  
       miBoard.add(miPlayerShip);
       spyOn(miPlayerShip, "step");
       miBoard.iterate("step",1.0);
@@ -121,26 +111,22 @@ describe("Clase GameBoard", function(){
         this.h = SpriteSheet.map['ship'].h;
         this.x = Game.width/2 - this.w / 2;
         this.y = Game.height - 10 - this.h;        
-      };
+      }; 
 
-      miBoard = new GameBoard(); 
-      miPlayerShip = new PlayerShip(); 
       miMisil = new misil();
 
       miBoard.add(miPlayerShip);
       miBoard.add(miMisil);
-      spyOn(miBoard, "detect"); 
-      spyOn(miBoard, "overlap");
+      spyOn(miBoard, "detect").andCallThrough();; 
+      spyOn(miBoard, "overlap").andCallThrough();;
       miBoard.collide(miPlayerShip); 
       expect(miBoard.detect).toHaveBeenCalled(); 
-      //expect(miBoard.collide(miPlayerShip)).toEqual(miMisil);
-      //expect(miBoard.overlap).toHaveBeenCalled();
+      expect(miBoard.collide(miPlayerShip)).toEqual(miMisil);
+      expect(miBoard.overlap).toHaveBeenCalled();
       expect(miBoard.overlap(miMisil,miPlayerShip)).toBeTruthy;
     });  
 
-    it ("Method step", function() { 
-      miBoard = new GameBoard();  
-
+    it ("Method step", function() {  
       spyOn(miBoard, "resetRemoved"); 
       spyOn(miBoard, "iterate");
       spyOn(miBoard, "finalizeRemoved");
@@ -150,10 +136,7 @@ describe("Clase GameBoard", function(){
       expect(miBoard.finalizeRemoved).toHaveBeenCalled();
     });  
 
-    it ("Method draw", function() { 
-      miBoard = new GameBoard();  
-      ctx = canvas.getContext('2d');
-
+    it ("Method draw", function() {  
       spyOn(miBoard, "iterate"); 
       miBoard.draw(ctx);
       expect(miBoard.iterate).toHaveBeenCalled();
