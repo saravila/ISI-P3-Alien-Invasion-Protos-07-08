@@ -72,12 +72,14 @@ describe("Clase GameBoard", function(){
 
       miBoard = new GameBoard();
       miPlayerShip = new PlayerShip();
+      miPlayerShip2 = new PlayerShip();
     });
 
     it("Method add", function(){
-
       expect(miBoard.add(miPlayerShip)).toBe(miPlayerShip);
-      expect(miBoard.objects.length).toBe(1); 
+      expect(miBoard.add(miPlayerShip2)).toBe(miPlayerShip2);
+      expect(miBoard.objects[1]).toBe(miPlayerShip2);
+      expect(miBoard.objects.length).toBe(2); 
     });
 
     it ("Method reset removed", function() {  
@@ -86,16 +88,21 @@ describe("Clase GameBoard", function(){
     });
 
     it ("Method remove", function() {  
-      miBoard.resetRemoved();
+      miBoard.resetRemoved(); 
+      //_.each([miPlayerShip,miPlayerShip2], 'miBoard.remove');
       miBoard.remove(miPlayerShip); 
-      expect(miBoard.removed.length).toBe(1);
+      miBoard.remove(miPlayerShip2); 
+      expect(miBoard.removed.length).toBe(2);
     });
 
      it ("Method finalizeRemoved", function() {  
+      miBoard.add(miPlayerShip);
+      miBoard.add(miPlayerShip2);
       miBoard.resetRemoved();
       miBoard.remove(miPlayerShip);
       miBoard.finalizeRemoved();
-      expect(miBoard.objects.length).toBe(0);
+      expect(miBoard.objects[0]).toBe(miPlayerShip2);
+      expect(_.contains(miBoard.objects, miPlayerShip)).toBeFalsy;
     });
 
     it ("Method iterate", function() {  
@@ -111,12 +118,13 @@ describe("Clase GameBoard", function(){
         this.h = SpriteSheet.map['ship'].h;
         this.x = Game.width/2 - this.w / 2;
         this.y = Game.height - 10 - this.h;        
-      }; 
+      };
 
       miMisil = new misil();
 
       miBoard.add(miPlayerShip);
       miBoard.add(miMisil);
+      _.each([miPlayerShip,miMisil], 'miBoard.add');
       spyOn(miBoard, "detect").andCallThrough();; 
       spyOn(miBoard, "overlap").andCallThrough();;
       miBoard.collide(miPlayerShip); 
