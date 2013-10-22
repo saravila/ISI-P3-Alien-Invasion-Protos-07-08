@@ -17,8 +17,6 @@ describe("Clase PlayerShip", function(){
 		expect(ctx).toBeDefined();
     });
 
-
-
     it("draw", function(){
 		// Comprobamos que draw llama a SpriteSheet.draw con los
 		// parametros adecuados
@@ -39,7 +37,6 @@ describe("Clase PlayerShip", function(){
 	 	expect(SpriteSheet.draw.calls[0].args[4]).toEqual(0);
 	
     });
-
 
     it("step sin teclas pulsadas", function(){
 		// Escribe tests para la clase PlayerShip
@@ -67,11 +64,9 @@ describe("Clase PlayerShip", function(){
 		expect(miNave.x).toEqual(Game.width/2 - miNave.w / 2);
     });
 
-
     it("step con tecla left pulsada", function(){
 		// 3. Tras llamar a step con una flecha pulsada, se actualiza
 		// la posicion de la nave
-
 
 		// Hacemos que se pulse la tecla left:
 		Game = {width: 320, height: 480, keys: {'left': true}};

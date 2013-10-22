@@ -1,37 +1,37 @@
 describe ("Fichero index.html para el juego", function(){
+
     beforeEach(function(){
-	loadFixtures('index.html');
+		loadFixtures('index.html');
     });
 
     it("incluye jQuery", function(){
-	expect($).toBeDefined();
+		expect($).toBeDefined();
     });
 
     it("contiene div", function(){
-	expect( $("div#container") ).toExist();
+		expect( $("div#container") ).toExist();
     });
 
     it("contiene canvas de tamano 320x480", function(){
-	expect( $("#container") ).toContain("canvas#game");
-	expect( $("canvas#game") ).toHaveAttr('width', '320');
-	expect( $("canvas#game") ).toHaveAttr('height', '480');
+		expect( $("#container") ).toContain("canvas#game");
+		expect( $("canvas#game") ).toHaveAttr('width', '320');
+		expect( $("canvas#game") ).toHaveAttr('height', '480');
     });
 
 });
-
 
 describe("Codigo que manipula el canvas en game.js", function(){
 
     var canvas, ctx;
 
     beforeEach(function(){
-	loadFixtures('index.html');
+		loadFixtures('index.html');
 
-	canvas = $('#game')[0];
-	expect(canvas).toExist();
+		canvas = $('#game')[0];
+		expect(canvas).toExist();
 
-	ctx = canvas.getContext('2d');
-	expect(ctx).toBeDefined();
+		ctx = canvas.getContext('2d');
+		expect(ctx).toBeDefined();
     });
 
 });
@@ -57,77 +57,76 @@ describe("Objeto singleton SpriteSheet", function(){
     var canvas, ctx;
 
     beforeEach(function(){
-	loadFixtures('index.html');
+		loadFixtures('index.html');
 
-	canvas = $('#game')[0];
-	expect(canvas).toExist();
+		canvas = $('#game')[0];
+		expect(canvas).toExist();
 
-	ctx = canvas.getContext('2d');
-	expect(ctx).toBeDefined();
+		ctx = canvas.getContext('2d');
+		expect(ctx).toBeDefined();
     });
-
 
     it("SpriteSheet.load()", function(){
 
-	spyOn(SpriteSheet, "load");
+		spyOn(SpriteSheet, "load");
 
-	expect(SpriteSheet).toBeDefined();
+		expect(SpriteSheet).toBeDefined();
 
-	SpriteSheet.load({
-		ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 }
-	}, function() {
-	    // sólo queremos probar si carga, ponemos callback vacía
-	});
+		SpriteSheet.load({
+			ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 }
+		}, function() {
+		    // sólo queremos probar si carga, ponemos callback vacía
+		});
 	
-	waits(100);
+		waits(100);
 
-	runs(function(){
-	    expect(SpriteSheet.load).toHaveBeenCalled();
-	});
+		runs(function(){
+		    expect(SpriteSheet.load).toHaveBeenCalled();
+		});
     });
 
     it("SpriteSheet.draw()", function(){
-	spyOn(ctx, "drawImage");
+		spyOn(ctx, "drawImage");
 
-	SpriteSheet.load({
-	    ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 }
-	}, function() {
-	    SpriteSheet.draw(ctx,"ship",0,0);
-	    SpriteSheet.draw(ctx,"ship",100,50);
-	    SpriteSheet.draw(ctx,"ship",150,100);
-	});
-	
-	waits(100);
+		SpriteSheet.load({
+		    ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 }
+		}, function() {
+		    SpriteSheet.draw(ctx,"ship",0,0);
+		    SpriteSheet.draw(ctx,"ship",100,50);
+		    SpriteSheet.draw(ctx,"ship",150,100);
+		});
+		
+		waits(100);
 
-	runs(function(){
-	    expect(ctx.drawImage.calls.length).toEqual(3);
- 	    expect(ctx.drawImage.calls[0].args[1]).toBe(0);
- 	    expect(ctx.drawImage.calls[0].args[2]).toBe(0);
- 	    expect(ctx.drawImage.calls[0].args[3]).toBe(37);
- 	    expect(ctx.drawImage.calls[0].args[4]).toBe(42);
- 	    expect(ctx.drawImage.calls[0].args[5]).toBe(0);
- 	    expect(ctx.drawImage.calls[0].args[6]).toBe(0);
- 	    expect(ctx.drawImage.calls[0].args[7]).toBe(37);
- 	    expect(ctx.drawImage.calls[0].args[8]).toBe(42);
+		runs(function(){
+		    expect(ctx.drawImage.calls.length).toEqual(3);
+	 	    expect(ctx.drawImage.calls[0].args[1]).toBe(0);
+	 	    expect(ctx.drawImage.calls[0].args[2]).toBe(0);
+	 	    expect(ctx.drawImage.calls[0].args[3]).toBe(37);
+	 	    expect(ctx.drawImage.calls[0].args[4]).toBe(42);
+	 	    expect(ctx.drawImage.calls[0].args[5]).toBe(0);
+	 	    expect(ctx.drawImage.calls[0].args[6]).toBe(0);
+	 	    expect(ctx.drawImage.calls[0].args[7]).toBe(37);
+	 	    expect(ctx.drawImage.calls[0].args[8]).toBe(42);
 
- 	    expect(ctx.drawImage.calls[1].args[1]).toBe(0);
- 	    expect(ctx.drawImage.calls[1].args[2]).toBe(0);
- 	    expect(ctx.drawImage.calls[1].args[3]).toBe(37);
- 	    expect(ctx.drawImage.calls[1].args[4]).toBe(42);
- 	    expect(ctx.drawImage.calls[1].args[5]).toBe(100);
- 	    expect(ctx.drawImage.calls[1].args[6]).toBe(50);
- 	    expect(ctx.drawImage.calls[1].args[7]).toBe(37);
- 	    expect(ctx.drawImage.calls[1].args[8]).toBe(42);
+	 	    expect(ctx.drawImage.calls[1].args[1]).toBe(0);
+	 	    expect(ctx.drawImage.calls[1].args[2]).toBe(0);
+	 	    expect(ctx.drawImage.calls[1].args[3]).toBe(37);
+	 	    expect(ctx.drawImage.calls[1].args[4]).toBe(42);
+	 	    expect(ctx.drawImage.calls[1].args[5]).toBe(100);
+	 	    expect(ctx.drawImage.calls[1].args[6]).toBe(50);
+	 	    expect(ctx.drawImage.calls[1].args[7]).toBe(37);
+	 	    expect(ctx.drawImage.calls[1].args[8]).toBe(42);
 
- 	    expect(ctx.drawImage.calls[2].args[1]).toBe(0);
- 	    expect(ctx.drawImage.calls[2].args[2]).toBe(0);
- 	    expect(ctx.drawImage.calls[2].args[3]).toBe(37);
- 	    expect(ctx.drawImage.calls[2].args[4]).toBe(42);
- 	    expect(ctx.drawImage.calls[2].args[5]).toBe(150);
- 	    expect(ctx.drawImage.calls[2].args[6]).toBe(100);
- 	    expect(ctx.drawImage.calls[2].args[7]).toBe(37);
- 	    expect(ctx.drawImage.calls[2].args[8]).toBe(42);
-	});
+	 	    expect(ctx.drawImage.calls[2].args[1]).toBe(0);
+	 	    expect(ctx.drawImage.calls[2].args[2]).toBe(0);
+	 	    expect(ctx.drawImage.calls[2].args[3]).toBe(37);
+	 	    expect(ctx.drawImage.calls[2].args[4]).toBe(42);
+	 	    expect(ctx.drawImage.calls[2].args[5]).toBe(150);
+	 	    expect(ctx.drawImage.calls[2].args[6]).toBe(100);
+	 	    expect(ctx.drawImage.calls[2].args[7]).toBe(37);
+	 	    expect(ctx.drawImage.calls[2].args[8]).toBe(42);
+		});
     });
 });
 

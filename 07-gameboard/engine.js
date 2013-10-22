@@ -8,27 +8,24 @@
 // (jugador, enemigo, proyectiles, y los elementos como el marcador de
 // puntuación o el número de vidas.
 
-
-
-
 // Objeto singleton Game: se guarda una unica instancia del
 // constructor anónimo en el objeto Game
 var Game = new function() {                                                                   
 
     // Inicializa el juego
     this.initialize = function(canvasElementId,sprite_data,callback) {
-	this.canvas = document.getElementById(canvasElementId)
-	this.width = this.canvas.width;
-	this.height= this.canvas.height;
+    	this.canvas = document.getElementById(canvasElementId)
+    	this.width = this.canvas.width;
+    	this.height= this.canvas.height;
 
-	this.ctx = this.canvas.getContext && this.canvas.getContext('2d');
-	if(!this.ctx) { return alert("Please upgrade your browser to play"); }
+    	this.ctx = this.canvas.getContext && this.canvas.getContext('2d');
+    	if(!this.ctx) { return alert("Please upgrade your browser to play"); }
 
-	this.setupInput();
+    	this.setupInput();
 
-	this.loop(); 
+    	this.loop(); 
 
-	SpriteSheet.load (sprite_data,callback);
+    	SpriteSheet.load (sprite_data,callback);
     };
 
     // Gestión de la entrada (teclas para izda/derecha y disparo)
@@ -36,41 +33,39 @@ var Game = new function() {
     this.keys = {};
 
     this.setupInput = function() {
-	$(window).keydown(function(event){
-	    if (KEY_CODES[event.which]) {
-		Game.keys[KEY_CODES[event.which]] = true;
-		return false;
-	    }
-	});
-	
-	$(window).keyup(function(event){
-	    if (KEY_CODES[event.which]) {
-		Game.keys[KEY_CODES[event.which]] = false;
-		return false;
-	    }
-	});
-	
+    	$(window).keydown(function(event){
+    	    if (KEY_CODES[event.which]) {
+        		Game.keys[KEY_CODES[event.which]] = true;
+        		return false;
+    	    }
+    	});
+    	
+    	$(window).keyup(function(event){
+    	    if (KEY_CODES[event.which]) {
+        		Game.keys[KEY_CODES[event.which]] = false;
+        		return false;
+    	    }
+    	});
     }
-
 
     // Bucle del juego
     var boards = [];
 
     this.loop = function() { 
-	// segundos transcurridos
-	var dt = 30 / 1000;
+    	// segundos transcurridos
+    	var dt = 30 / 1000;
 
-	// Para cada board, de 0 en adelante, se 
-	// llama a su método step() y luego a draw()
-	for(var i=0,len = boards.length;i<len;i++) {
-	    if(boards[i]) { 
-		boards[i].step(dt);
-		boards[i].draw(Game.ctx);
-	    }
-	}
+    	// Para cada board, de 0 en adelante, se 
+    	// llama a su método step() y luego a draw()
+    	for(var i=0,len = boards.length;i<len;i++) {
+    	    if(boards[i]) { 
+        		boards[i].step(dt);
+        		boards[i].draw(Game.ctx);
+    	    }
+    	}
 
-	// Ejecutar dentro de 30 ms
-	setTimeout(Game.loop,30);
+    	// Ejecutar dentro de 30 ms
+    	setTimeout(Game.loop,30);
     };
     
     // Para cambiar el panel activo en el juego.
@@ -78,8 +73,6 @@ var Game = new function() {
     // Cada capa tiene que tener en su interfaz step() y draw()
     this.setBoard = function(num,board) { boards[num] = board; };
 };
-
-
 
 // Objeto singleton SpriteSheet: se guarda una unica instancia del
 // constructor anónimo en el objeto SpriteSheet
@@ -95,13 +88,12 @@ var SpriteSheet = new function() {
     // callback: para llamarla cuando se haya cargado la hoja de
     // sprites
     this.load = function(spriteData,callback) { 
-	this.map = spriteData;
-	this.image = new Image();
-	this.image.onload = callback;
-	this.image.src = 'images/sprites.png';
+    	this.map = spriteData;
+    	this.image = new Image();
+    	this.image.onload = callback;
+    	this.image.src = 'images/sprites.png';
     };
 
-    
     // Para dibujar sprites individuales en el contexto de canvas ctx
     //
     // Parámetros: contexto, string con nombre de sprite para buscar
@@ -109,14 +101,14 @@ var SpriteSheet = new function() {
     //  frame para seleccionar el frame de un sprite que tenga varios
     //  como la explosion
     this.draw = function(ctx,sprite,x,y,frame) {
-	var s = this.map[sprite];
-	if(!frame) frame = 0;
-	ctx.drawImage(this.image,
-                      s.sx + frame * s.w, 
-                      s.sy, 
-                      s.w, s.h, 
-                      Math.floor(x), Math.floor(y),
-                      s.w, s.h);
+    	var s = this.map[sprite];
+    	if(!frame) frame = 0;
+    	ctx.drawImage(this.image,
+                          s.sx + frame * s.w, 
+                          s.sy, 
+                          s.w, s.h, 
+                          Math.floor(x), Math.floor(y),
+                          s.w, s.h);
     };
 }
 
@@ -135,19 +127,19 @@ var TitleScreen = function TitleScreen(title,subtitle,callback) {
     // pulsada. Si comienza el juego con la tecla pulsada, hay que
     // soltarla y
     this.step = function(dt) {
-	if(!Game.keys['fire']) up = true;
-	if(up && Game.keys['fire'] && callback) callback();
+    	if(!Game.keys['fire']) up = true;
+    	if(up && Game.keys['fire'] && callback) callback();
     };
 
     this.draw = function(ctx) {
-	ctx.fillStyle = "#FFFFFF";
-	ctx.textAlign = "center";
+    	ctx.fillStyle = "#FFFFFF";
+    	ctx.textAlign = "center";
 
-	ctx.font = "bold 40px bangers";
-	ctx.fillText(title,Game.width/2,Game.height/2);
+    	ctx.font = "bold 40px bangers";
+    	ctx.fillText(title,Game.width/2,Game.height/2);
 
-	ctx.font = "bold 20px bangers";
-	ctx.fillText(subtitle,Game.width/2,Game.height/2 + 40);
+    	ctx.font = "bold 20px bangers";
+    	ctx.fillText(subtitle,Game.width/2,Game.height/2 + 40);
     };
 };
 
@@ -202,19 +194,16 @@ var GameBoard = function() {
     this.iterate = function(funcName) {
     	// Convertimos en un array args (1..)
     	var args = Array.prototype.slice.call(arguments,1);
-
-    	for(var i=0, len=this.objects.length; i<len;i++) {
-    	    var obj = this.objects[i];
-    	    obj[funcName].apply(obj,args)
-    	}
+        _(this.objects).each(function(obj) { 
+            obj[funcName].apply(obj,args);
+        }); 
     };
 
     // Devuelve el primer objeto de objects para el que func es true
-    this.detect = function(func) {
-    	for(var i = 0,val=null, len=this.objects.length; i < len; i++) {
-    	    if(func.call(this.objects[i])) return this.objects[i];
-    	}
-    	return false;
+    this.detect = function(func) {     	
+        return _(this.objects).find(function(obj) { 
+            return func.call(obj);
+        });  
     };
 
     // Cuando Game.loop() llame a step(), hay que llamar al método
