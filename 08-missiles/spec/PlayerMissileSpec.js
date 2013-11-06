@@ -56,7 +56,17 @@ describe("Clase PlayerMissile", function(){
     spyOn(miMisil.board, "remove").andCallThrough();
     miMisil.step(dt);
     expect(miMisil.board.remove).toHaveBeenCalledWith(miMisil); 
-  });   
+  });  
+
+  it ("Method draw", function() {
+    SpriteSheet = { 
+      draw: function(ctx, sprite, x, y) {}
+    };
+
+    spyOn(SpriteSheet, "draw").andCallThrough();
+    miMisil.draw(ctx);
+    expect(SpriteSheet.draw).toHaveBeenCalledWith(ctx,'missile',miMisil.x,miMisil.y);
+  })
 
 });
 
