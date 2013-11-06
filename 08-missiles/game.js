@@ -101,9 +101,9 @@ var PlayerShip = function() {
     this.vx = 0;
 
     this.reloadTime = 0.25;  // Un cuarto de segundo para poder volver a disparar
-    this.reload = this.reloadTime;
-
+    this.reload = this.reloadTime;  
     this.maxVel = 200;
+    this.pressed = false; 
 
     this.step = function(dt) {
     	if(Game.keys['left']) { 
@@ -125,16 +125,17 @@ var PlayerShip = function() {
     	    this.x = Game.width - this.w 
     	}
 
-    	this.reload-=dt;
-    	if(Game.keys['fire'] && this.reload < 0) {
-    	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
-    	    Game.keys['fire'] = false;
+    	this.reload-=dt; 
+    	if(Game.keys['fire'] && !this.pressed && this.reload < 0) {
+    	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload 
     	    this.reload = this.reloadTime;
 
     	    // Se añaden al gameboard 2 misiles 
     	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
     	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
     	}
+        // Si mantenemos pulsada la tecla enter this.pressed será siempre true y por lo tanto no se repintarán los misiles.
+        this.pressed = Game.keys['fire']; 
     }
 
     this.draw = function(ctx) {
