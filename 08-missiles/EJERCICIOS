@@ -53,6 +53,12 @@ EJERCICIOS
 6. Añade una prueba específica para comprobar que se satisface el
    requisito definido en el apartado anterior.
 
+----------------
+
+cd src
+ln -s ../game.js
+ln -s ../engine.js
+
 
 
 

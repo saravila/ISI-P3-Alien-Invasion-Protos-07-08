@@ -26,8 +26,8 @@ var Starfield = function(speed,opacity,numStars,clear) {
 
     // Creamos un objeto canvas, no visible en la página Web
     var stars = $('<canvas/>')
-	.attr('width', Game.width)
-	.attr('height', Game.height)[0];
+            	.attr('width', Game.width)
+            	.attr('height', Game.height)[0];
     // Sin jQuery lo hacemos asi:
     //    var stars = document.createElement("canvas");
     //    stars.width = Game.width; 
@@ -41,8 +41,8 @@ var Starfield = function(speed,opacity,numStars,clear) {
     // Si la opción clear está activada, el fondo del canvas se pinta
     // de negro. Utilizado en el nivel mas profundo de estrellas
     if(clear) {
-	starCtx.fillStyle = "#000";
-	starCtx.fillRect(0,0,stars.width,stars.height);
+    	starCtx.fillStyle = "#000";
+    	starCtx.fillRect(0,0,stars.width,stars.height);
     }
 
     // Dibujamos las estrellas blancas sobre el canvas no visible,
@@ -50,47 +50,46 @@ var Starfield = function(speed,opacity,numStars,clear) {
     starCtx.fillStyle = "#FFF";
     starCtx.globalAlpha = opacity; // nivel de transparencia de las estrellas
     for(var i=0;i<numStars;i++) {
-	starCtx.fillRect(Math.floor(Math.random()*stars.width),
-			 Math.floor(Math.random()*stars.height),
-			 2,
-			 2);
+    	starCtx.fillRect(Math.floor(Math.random()*stars.width),
+            			 Math.floor(Math.random()*stars.height),
+            			 2,
+            			 2);
     }
 
     // Se llama a este método en cada frame de la animación para dibujar
     // el campo de estrellas en la pantalla
     this.draw = function(ctx) {
-	var intOffset = Math.floor(offset);
-	var remaining = stars.height - intOffset;
+    	var intOffset = Math.floor(offset);
+    	var remaining = stars.height - intOffset;
 
-	// Dibujar sobre el contexto ctx la parte de arriba del canvas con
-	// las estrellas
-	if(intOffset > 0) {
-	    ctx.drawImage(stars,
-			  0, remaining,
-			  stars.width, intOffset,
-			  0, 0,
-			  stars.width, intOffset);
-	}
+    	// Dibujar sobre el contexto ctx la parte de arriba del canvas con
+    	// las estrellas
+    	if(intOffset > 0) {
+            ctx.drawImage(stars,
+                		  0, remaining,
+                		  stars.width, intOffset,
+                		  0, 0,
+                		  stars.width, intOffset);
+	    }
 
-	// Dibujar sobre el contexto ctx la parte inferior del canvas con
-	// las estrellas
-	if(remaining > 0) {
-	    ctx.drawImage(stars,
-			  0, 0,
-			  stars.width, remaining,
-			  0, intOffset,
-			  stars.width, remaining);
-	}
+    	// Dibujar sobre el contexto ctx la parte inferior del canvas con
+    	// las estrellas
+    	if(remaining > 0) {
+    	    ctx.drawImage(stars,
+            			  0, 0,
+            			  stars.width, remaining,
+            			  0, intOffset,
+            			  stars.width, remaining);
+    	}
     }
 
     // En cada paso de la animación, movemos el campo de estrellas
     // modificando el offset según la cantidad de tiempo transcurrida
     this.step = function(dt) {
-	offset += dt * speed; // velocidad = espacio / tiempo
-	offset = offset % stars.height;
+    	offset += dt * speed; // velocidad = espacio / tiempo
+    	offset = offset % stars.height;
     }
 }
-
 
 // La clase PlayerShip tambien ofrece la interfaz step(), draw() para
 // poder ser dibujada desde el bucle principal del juego
@@ -107,31 +106,39 @@ var PlayerShip = function() {
     this.maxVel = 200;
 
     this.step = function(dt) {
-	if(Game.keys['left']) { this.vx = -this.maxVel; }
-	else if(Game.keys['right']) { this.vx = this.maxVel; }
-	else { this.vx = 0; }
+    	if(Game.keys['left']) { 
+            this.vx = -this.maxVel; 
+        }
+    	else if(Game.keys['right']) { 
+            this.vx = this.maxVel; 
+        }
+    	else { 
+            this.vx = 0; 
+        }
 
-	this.x += this.vx * dt;
+    	this.x += this.vx * dt;
 
-	if(this.x < 0) { this.x = 0; }
-	else if(this.x > Game.width - this.w) { 
-	    this.x = Game.width - this.w 
-	}
+    	if(this.x < 0) { 
+            this.x = 0; 
+        }
+    	else if(this.x > Game.width - this.w) { 
+    	    this.x = Game.width - this.w 
+    	}
 
-	this.reload-=dt;
-	if(Game.keys['fire'] && this.reload < 0) {
-	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
-	    Game.keys['fire'] = false;
-	    this.reload = this.reloadTime;
+    	this.reload-=dt;
+    	if(Game.keys['fire'] && this.reload < 0) {
+    	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
+    	    Game.keys['fire'] = false;
+    	    this.reload = this.reloadTime;
 
-	    // Se añaden al gameboard 2 misiles 
-	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
-	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
-	}
+    	    // Se añaden al gameboard 2 misiles 
+    	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
+    	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
+    	}
     }
 
     this.draw = function(ctx) {
-	SpriteSheet.draw(ctx,'ship',this.x,this.y,0);
+	   SpriteSheet.draw(ctx,'ship',this.x,this.y,0);
     }
 }
 
@@ -143,21 +150,22 @@ var PlayerMissile = function(x,y) {
     this.w = SpriteSheet.map['missile'].w;
     this.h = SpriteSheet.map['missile'].h;
     this.x = x - this.w/2; 
-
     this.y = y - this.h; 
-    this.vy = -700;
+    this.vy = -700; 
+
+    this.step = function(dt)  {
+        this.y += this.vy * dt;
+        if(this.y < -this.h) { 
+            this.board.remove(this); 
+        }
+    };
+
+    this.draw = function(ctx)  {
+        SpriteSheet.draw(ctx,'missile',this.x,this.y);
+    };
 };
 
-PlayerMissile.prototype.step = function(dt)  {
-    this.y += this.vy * dt;
-    if(this.y < -this.h) { this.board.remove(this); }
-};
-
-PlayerMissile.prototype.draw = function(ctx)  {
-    SpriteSheet.draw(ctx,'missile',this.x,this.y);
-};
-
-
+// Inicializar el juego
 $(function() {
     Game.initialize("game",sprites,startGame);
 });
