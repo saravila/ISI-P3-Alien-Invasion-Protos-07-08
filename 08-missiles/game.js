@@ -125,8 +125,8 @@ var PlayerShip = function() {
     	    this.x = Game.width - this.w 
     	}
 
-    	this.reload-=dt; 
-    	if(Game.keys['fire'] && !this.pressed && this.reload < 0) {
+    	this.reload-=dt;  
+    	if(Game.keys['fire'] && !this.pressed && this.reload < 0) { 
     	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload 
     	    this.reload = this.reloadTime;
 
@@ -135,6 +135,7 @@ var PlayerShip = function() {
     	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
     	}
         // Si mantenemos pulsada la tecla enter this.pressed será siempre true y por lo tanto no se repintarán los misiles.
+        // Es decir, si el valor de la clave fire se mantiene constante a lo largo de los tiempos reload. Deben cambiar de estado.
         this.pressed = Game.keys['fire']; 
     }
 

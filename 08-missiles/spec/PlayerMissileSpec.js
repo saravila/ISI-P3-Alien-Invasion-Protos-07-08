@@ -40,6 +40,7 @@ describe("Clase PlayerMissile", function(){
 
     // Cargamos en la hoja de sprites el elemento que queremos testar (missile) ya que desde aquí no podemos acceder a la variable sprites.
     SpriteSheet.map = { 
+      ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
       missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 }
     };
     miMisil = new PlayerMissile(3, 2000);
@@ -66,6 +67,22 @@ describe("Clase PlayerMissile", function(){
     spyOn(SpriteSheet, "draw").andCallThrough();
     miMisil.draw(ctx);
     expect(SpriteSheet.draw).toHaveBeenCalledWith(ctx,'missile',miMisil.x,miMisil.y);
+  })
+
+  it ("Multishot", function () {
+    // Tecla de fire pulsada por defecto.
+    Game.keys = {'fire': true};
+    miPlayer = new PlayerShip();
+    miPlayer.board = {
+      add: function(obj) {}
+    }
+
+    spyOn(miPlayer.board, "add").andCallThrough();
+    miPlayer.step(1); 
+    expect(miPlayer.board.add).toHaveBeenCalled();  
+    miPlayer.step(2); 
+    expect(miPlayer.board.add).not.toHaveBeenCalled(); 
+
   })
 
 });
