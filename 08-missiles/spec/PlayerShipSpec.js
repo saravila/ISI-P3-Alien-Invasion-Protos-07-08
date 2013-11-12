@@ -16,7 +16,7 @@ describe("Clase PlayerShip", function(){
 	ctx = canvas.getContext('2d');
 	expect(ctx).toBeDefined();
 
-    });
+    }); 
 
 
 

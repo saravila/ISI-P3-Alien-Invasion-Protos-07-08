@@ -17,14 +17,14 @@ var playGame = function() {
     var board = new GameBoard();
     board.add(new PlayerShip());
     Game.setBoard(3,board);
-}
+} 
 
 
 // Si se construye con clear==true no se pintan estrellas con fondo
 // transparente, sino fondo en negro
 var Starfield = function(speed,opacity,numStars,clear) {
 
-    // Creamos un objeto canvas, no visible en la p·gina Web
+    // Creamos un objeto canvas, no visible en la p√°gina Web
     var stars = $('<canvas/>')
             	.attr('width', Game.width)
             	.attr('height', Game.height)[0];
@@ -38,7 +38,7 @@ var Starfield = function(speed,opacity,numStars,clear) {
 
     var offset = 0;
 
-    // Si la opciÛn clear est· activada, el fondo del canvas se pinta
+    // Si la opci√≥n clear est√° activada, el fondo del canvas se pinta
     // de negro. Utilizado en el nivel mas profundo de estrellas
     if(clear) {
     	starCtx.fillStyle = "#000";
@@ -46,7 +46,7 @@ var Starfield = function(speed,opacity,numStars,clear) {
     }
 
     // Dibujamos las estrellas blancas sobre el canvas no visible,
-    // como rect·ngulos de 2 pixeles en posiciones aleatorias
+    // como rect√°ngulos de 2 pixeles en posiciones aleatorias
     starCtx.fillStyle = "#FFF";
     starCtx.globalAlpha = opacity; // nivel de transparencia de las estrellas
     for(var i=0;i<numStars;i++) {
@@ -56,7 +56,7 @@ var Starfield = function(speed,opacity,numStars,clear) {
             			 2);
     }
 
-    // Se llama a este mÈtodo en cada frame de la animaciÛn para dibujar
+    // Se llama a este m√©todo en cada frame de la animaci√≥n para dibujar
     // el campo de estrellas en la pantalla
     this.draw = function(ctx) {
     	var intOffset = Math.floor(offset);
@@ -83,8 +83,8 @@ var Starfield = function(speed,opacity,numStars,clear) {
     	}
     }
 
-    // En cada paso de la animaciÛn, movemos el campo de estrellas
-    // modificando el offset seg˙n la cantidad de tiempo transcurrida
+    // En cada paso de la animaci√≥n, movemos el campo de estrellas
+    // modificando el offset seg√∫n la cantidad de tiempo transcurrida
     this.step = function(dt) {
     	offset += dt * speed; // velocidad = espacio / tiempo
     	offset = offset % stars.height;
@@ -128,13 +128,12 @@ var PlayerShip = function() {
     	this.reload-=dt;  
     	if(Game.keys['fire'] && !this.pressed && this.reload < 0) { 
     	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload 
-    	    this.reload = this.reloadTime;
-
-    	    // Se aÒaden al gameboard 2 misiles 
+    	    this.reload = this.reloadTime; 
+    	    // Se a√±aden al gameboard 2 misiles 
     	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
     	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
     	}
-        // Si mantenemos pulsada la tecla enter this.pressed ser· siempre true y por lo tanto no se repintar·n los misiles.
+        // Si mantenemos pulsada la tecla enter this.pressed ser√° siempre true y por lo tanto no se repintar√°n los misiles.
         // Es decir, si el valor de la clave fire se mantiene constante a lo largo de los tiempos reload. Deben cambiar de estado.
         this.pressed = Game.keys['fire']; 
     }
@@ -145,7 +144,7 @@ var PlayerShip = function() {
 }
 
 // Constructor los misiles.
-// Los metodos de esta clase los aÒadimos a su prototipo. De esta
+// Los metodos de esta clase los a√±adimos a su prototipo. De esta
 // forma solo existe una copia de cada uno para todos los misiles, y
 // no una copia para cada objeto misil
 var PlayerMissile = function(x,y) {
